@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE note [
-<!ENTITY energy "7">
-<!ENTITY files "1685">
+<!ENTITY energy "27">
+<!ENTITY files "792">
 ]>
 <job simulateSubmission="false" minFilesPerProcess="&files;" maxFilesPerProcess="&files;" fileListSyntax="paths">
   
@@ -17,7 +17,7 @@
 		</Package>
 	</SandBox>
 
-	<input URL="file:/gpfs01/star/pwg/dneff/scratch/trees2/output/&energy;GeV/*.root" nFiles="all" />
+	<input URL="file:/gpfs01/star/pwg/dneff/scratch/trees_roli/output/&energy;GeV/*.root" nFiles="all" />
 	<stderr URL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/err_&energy;GeV$JOBID.err"/>
 	<stdout URL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/log_&energy;GeV$JOBID.out" />
 
