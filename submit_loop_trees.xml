@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE note [
+<!ENTITY energy "7">
+<!ENTITY files "1685">
+]>
+<job simulateSubmission="false" minFilesPerProcess="&files;" maxFilesPerProcess="&files;" fileListSyntax="paths">
+  
+	<command>
+		starver dev
+		root4star -l -b -q loopTrees.C\(\"$FILELIST\",\"loop_$JOBID.root\")
+	</command>
+  
+	<SandBox>
+		<Package>
+			<File>file:./.sl73_gcc485</File>
+      		<File>file:./loopTrees.C</File>
+		</Package>
+	</SandBox>
+
+	<input URL="file:/gpfs01/star/pwg/dneff/scratch/trees2/output/&energy;GeV/*.root" nFiles="all" />
+	<stderr URL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/err_&energy;GeV$JOBID.err"/>
+	<stdout URL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/log_&energy;GeV$JOBID.out" />
+
+	<output fromScratch="*.root" toURL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/output/&energy;GeV/" />
+	<output fromScratch="*.log" toURL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/" />
+ 
+	<Generator>
+		<Location>/gpfs01/star/pwg/dneff/scratch/loop_out/log/</Location>
+		<ScriptLocation>/gpfs01/star/pwg/dneff/scratch/loop_out/script/7GeV/</ScriptLocation>
+		<ListLocation>/gpfs01/star/pwg/dneff/scratch/loop_out/list/7GeV/</ListLocation>
+	</Generator>
+  
+</job>
