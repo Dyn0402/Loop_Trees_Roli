@@ -173,53 +173,53 @@ void moments(TString inputfilename_profile, int energy)
         
         for( int i=1; i< binSize; i++){
             
-            sprintf(name,"p1_%d",con);
+            sprintf(name,"p1_1_%d",con);
             int ir =((TProfile *)pro_file->Get(name))->GetBinCenter(i-1);
             if(ir < 0)continue;
             
-            sprintf(name,"p1_%d",con);
+            sprintf(name,"p1_1_%d",con);
             nevent[ir] = ((TProfile *)pro_file->Get(name))->GetBinEntries(i-1); //Ni (# of event with i multiplicity)
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
             if(nevent[ir] ==0)continue;
             
-            sprintf(name,"p1_%d",con);
+            sprintf(name,"p1_1_%d",con);
             netq1[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p2_%d",con);
+            sprintf(name,"p2_1_%d",con);
             netq2[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p3_%d",con);
+            sprintf(name,"p3_1_%d",con);
             netq3[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p4_%d",con);
+            sprintf(name,"p4_1_%d",con);
             netq4[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p5_%d",con);
+            sprintf(name,"p5_1_%d",con);
             netq5[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p6_%d",con);
+            sprintf(name,"p6_1_%d",con);
             netq6[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p7_%d",con);
+            sprintf(name,"p7_1_%d",con);
             netq7[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
             
-            sprintf(name,"p8_%d",con);
+            sprintf(name,"p8_1_%d",con);
             netq8[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
             double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
             if (check_error < pow(10,-7)) continue;
