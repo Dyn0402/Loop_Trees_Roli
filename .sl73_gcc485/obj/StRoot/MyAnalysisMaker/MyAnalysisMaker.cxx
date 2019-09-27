@@ -1,1 +1,0 @@
-../../../../StRoot/MyAnalysisMaker/MyAnalysisMaker.cxx

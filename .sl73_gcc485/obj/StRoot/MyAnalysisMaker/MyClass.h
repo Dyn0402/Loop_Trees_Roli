@@ -1,1 +1,0 @@
-../../../../StRoot/MyAnalysisMaker/MyClass.h
