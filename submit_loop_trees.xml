@@ -6,8 +6,8 @@
 <job simulateSubmission="false" minFilesPerProcess="&files;" maxFilesPerProcess="&files;" fileListSyntax="paths">
   
 	<command>
-		starver dev
-		root4star -l -b -q loopTrees.C\(\"$FILELIST\",\"loop_$JOBID.root\")
+		starver SL16d
+		root4star -l -b -q loopTrees.C\(\"$FILELIST\",\"loop_$JOBID.root\",&energy;\)
 	</command>
   
 	<SandBox>

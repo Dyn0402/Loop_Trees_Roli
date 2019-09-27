@@ -1,4 +1,4 @@
-int loopTrees( char *name1 = "Tracks.root", char *name2 = "output.root")
+int loopTrees( char *name1 = "Tracks.root", char *name2 = "output.root", int energy)
  {
   gSystem->Load("St_base");
   gSystem->Load("StChain");
@@ -12,7 +12,7 @@ int loopTrees( char *name1 = "Tracks.root", char *name2 = "output.root")
   printf("Output file: %s\n", name2);
 
   MyAnalysisMaker  LoopMaker("Loop");
-  return LoopMaker.doLoop(name1, name2);
+  return LoopMaker.doLoop(name1, name2, energy);
 
   gROOT->Reset();
 }
