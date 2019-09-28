@@ -1,5 +1,16 @@
 //____________________________________________________________
 //
+//:::::::: Macro for higher moments calculation:::::::::::::::
+//
+//
+//:::::::::::::::: Written by Md Nasim :::::::::::::::::::::::
+//
+//
+//:::::::::::::::: Edited by Roli Esha :::::::::::::::::::::::
+//
+//
+//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+//
 // Ref: Code of N.R Sahoo (psn0572) and X. Luo (psn0571)::::::
 //____________________________________________________________
 
@@ -20,7 +31,7 @@
 #include "TRandom.h"
 #include "TMath.h"
 
-#define binSize 650
+#define binSize 700
 
 double Kurtosis(double,double,double,double,double);
 double Skewness(double,double,double,double);
@@ -34,45 +45,14 @@ void moments(TString inputfilename_profile, int energy)
     
     TFile *pro_file = new TFile(inputfilename_profile);
     
-    if (energy == 7){
-        ref_beg = 165;
-        ofstream datafilep("data7.txt");
-    }
-    
-    else if (energy == 11){
-        ref_beg = 206;
-        ofstream datafilep("data11.txt");
-    }
-    
-    else if(energy == 14){
-        ref_beg = 225;
-        ofstream datafilep("data14.txt");
-    }
-    
-    else if(energy == 19){
-        ref_beg = 258;
-        ofstream datafilep("data19.txt");
-    }
-    
-    else if(energy == 27){
-        ref_beg = 284;
-        ofstream datafilep("data27.txt");
-    }
-    
-    else if(energy == 39){
-        ref_beg = 307;
-        ofstream datafilep("data39.txt");
-    }
-    
-    else if(energy == 62){
-        ref_beg = 334;
-        ofstream datafilep("data62.txt");
-    }
-    
-    else if(energy == 200){
-        ref_beg = 421;
-        ofstream datafilep("data200.txt");
-    }
+    if (energy == 7) {ofstream datafilep("data7.txt"); ofstream datafileq("mixed7.txt");}
+    else if (energy == 11) {ofstream datafilep("data11.txt"); ofstream datafileq("mixed11.txt");}
+    else if (energy == 14) {ofstream datafilep("data14.txt"); ofstream datafileq("mixed14.txt");}
+    else if (energy == 19) {ofstream datafilep("data19.txt"); ofstream datafileq("mixed19.txt");}
+    else if (energy == 27) {ofstream datafilep("data27.txt"); ofstream datafileq("mixed27.txt");}
+    else if (energy == 39) {ofstream datafilep("data39.txt"); ofstream datafileq("mixed39.txt");}
+    else if (energy == 62) {ofstream datafilep("data62.txt"); ofstream datafileq("mixed62.txt");}
+    else if (energy == 200) {ofstream datafilep("data200.txt"); ofstream datafileq("mixed200.txt");}
     
     else{
         cout << "Please use valid file with a valid energy." << endl;
@@ -80,7 +60,7 @@ void moments(TString inputfilename_profile, int energy)
     
     char name[60];
     
-    //ref_beg = 0;
+    ref_beg = 0;
     // ==== define arrays ====
     
     double nevent[binSize];
@@ -169,170 +149,173 @@ void moments(TString inputfilename_profile, int energy)
     cout << "Starting actual work !! " << endl;
     ///// ===== Getting profile from input file =====
     
-    for(int con = 1; con < 5; con++){
-        
-        for( int i=1; i< binSize; i++){
+    for(int con = 1; con < 2; con++){
+        for(int j = 1; j <= 15; j++){
+            for( int i=1; i< binSize; i++){
+                
+                sprintf(name,"p1_%d_%d",con,j);
+                int ir =((TProfile *)pro_file->Get(name))->GetBinCenter(i-1);
+                if(ir < 0)continue;
+                
+                sprintf(name,"p1_%d_%d",con,j);
+                nevent[ir] = ((TProfile *)pro_file->Get(name))->GetBinEntries(i-1); //Ni (# of event with i multiplicity)
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                if(nevent[ir] ==0)continue;
+                
+                sprintf(name,"p1_%d_%d",con,j);
+                netq1[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p2_%d_%d",con,j);
+                netq2[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p3_%d_%d",con,j);
+                netq3[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p4_%d_%d",con,j);
+                netq4[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p5_%d_%d",con,j);
+                netq5[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p6_%d_%d",con,j);
+                netq6[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p7_%d_%d",con,j);
+                netq7[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                sprintf(name,"p8_%d_%d",con,j);
+                netq8[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
+                double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
+                if (check_error < pow(10,-7)) continue;
+                
+                
+                
+                ///// will be need for error calculation
+                int evt = nevent[ir];
+                if (evt == 0) continue;
+                
+                mu1[ir] = netq1[ir]/evt;
+                mu2[ir] = netq2[ir]/evt - pow(netq1[ir]/evt,2);
+                mu3[ir] = netq3[ir]/evt - 3*(netq1[ir]/evt)*(netq2[ir]/evt)+ 2*pow(netq1[ir]/evt,3);
+                mu4[ir] = netq4[ir]/evt - 4*(netq1[ir]/evt)*(netq3[ir]/evt) + 6*pow(netq1[ir]/evt,2)*netq2[ir]/evt - 3*pow(netq1[ir]/evt,4);
+                
+                mu5[ir] = netq5[ir]/evt - 10*(netq2[ir]/evt)*pow(netq1[ir]/evt,3) + 10*(netq3[ir]/evt)*pow(netq1[ir]/evt,2) - 5*(netq4[ir]/evt)*(netq1[ir]/evt)+ 4*pow(netq1[ir]/evt,5);
+                
+                mu6[ir] = netq6[ir]/evt + 15*(netq2[ir]/evt)*pow(netq1[ir]/evt,4) - 20*(netq3[ir]/evt)*pow(netq1[ir]/evt,3) +15*(netq4[ir]/evt)*pow(netq1[ir]/evt,2)
+                - 6*(netq5[ir]/evt)*(netq1[ir]/evt) - 5*pow(netq1[ir]/evt,6);
+                
+                mu7[ir] = netq7[ir]/evt - 21*(netq2[ir]/evt)*pow(netq1[ir]/evt,5) + 35*(netq3[ir]/evt)*pow(netq1[ir]/evt,4) - 35*(netq4[ir]/evt)*pow(netq1[ir]/evt,3)
+                + 21*(netq5[ir]/evt)*pow(netq1[ir]/evt,2) - 7*(netq6[ir]/evt)*(netq1[ir]/evt) + 6*pow(netq1[ir]/evt,7);
+                
+                mu8[ir] = netq8[ir]/evt + 28*(netq2[ir]/evt)*pow(netq1[ir]/evt,6) - 56*(netq3[ir]/evt)*pow(netq1[ir]/evt,5) + 70*(netq4[ir]/evt)*pow(netq1[ir]/evt,4)
+                - 56*(netq5[ir]/evt)*pow(netq1[ir]/evt,3)+28*(netq6[ir]/evt)*pow(netq1[ir]/evt,2) - 8*(netq7[ir]/evt)*(netq1[ir]/evt) - 7*pow(netq1[ir]/evt,8);
+                
+                
+                double den = Variance(netq1[ir],netq2[ir],evt);
+                if(den<pow(10,-8)) continue; //go back if sigma is model_zero
+                
+                
+                //::::::::Delta Theorem for error:::::::::
+                m3[ir]    =  (mu3[ir])/pow(den,3);
+                m4[ir]    =  (mu4[ir])/pow(den,4);
+                m5[ir]    =  (mu5[ir])/pow(den,5);
+                m6[ir]    =  (mu6[ir])/pow(den,6);
+                m7[ir]    =  (mu7[ir])/pow(den,7);
+                m8[ir]    =  (mu8[ir])/pow(den,8);
+                
+                double check_sigma = ((m4[ir] - 1)*den*den)/(4*evt);
+                
+                double check_skew = (9 - 6*m4[ir] + m3[ir]*m3[ir]*(35 + 9*m4[ir])/4 - 3*m3[ir]*m5[ir] + m6[ir])/(evt);
+                
+                double check_kurt = (-m4[ir]*m4[ir] + 4*m4[ir]*m4[ir]*m4[ir] + 16*m3[ir]*m3[ir]*( 1 + m4[ir] ) - 8*m3[ir]*m5[ir] - 4*m4[ir]*m6[ir] + m8[ir])/(evt);
+                
+                
+                if(check_sigma < 0 || check_skew < 0 || check_kurt < 0) {cout << "DANGER in refmult =  " << ir << endl; continue;}
+                
+                Err_mean[ir] = den/sqrt(evt);
+                Err_sigma[ir] = sqrt(check_sigma);
+                Err_skew[ir]  = sqrt(check_skew);
+                Err_kurt[ir]  = sqrt(check_kurt);
+                
+                
+                ////calculate moments for each refmult bin
+                
+                mean_n[ir] = Mean(netq1[ir],evt);
+                sigma_n[ir] = Variance(netq1[ir],netq2[ir],evt);
+                skew_n[ir]  = Skewness(netq1[ir],netq2[ir],netq3[ir],evt);
+                kurt_n[ir]  = Kurtosis(netq1[ir],netq2[ir],netq3[ir],netq4[ir],evt);
+                
+                
+            }//refmult bin
             
-            sprintf(name,"p1_1_%d",con);
-            int ir =((TProfile *)pro_file->Get(name))->GetBinCenter(i-1);
-            if(ir < 0)continue;
             
-            sprintf(name,"p1_1_%d",con);
-            nevent[ir] = ((TProfile *)pro_file->Get(name))->GetBinEntries(i-1); //Ni (# of event with i multiplicity)
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
+            cout << "Puhh" << endl;
             
-            if(nevent[ir] ==0)continue;
+            ////////calculate cumulant for each centrality bin and phi bin
             
-            sprintf(name,"p1_1_%d",con);
-            netq1[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p2_1_%d",con);
-            netq2[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p3_1_%d",con);
-            netq3[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p4_1_%d",con);
-            netq4[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p5_1_%d",con);
-            netq5[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p6_1_%d",con);
-            netq6[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p7_1_%d",con);
-            netq7[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
-            
-            sprintf(name,"p8_1_%d",con);
-            netq8[ir] = nevent[ir]*((TProfile *)pro_file->Get(name))->GetBinContent(i-1);
-            double check_error = ((TProfile *)pro_file->Get(name))->GetBinError(i-1);
-            if (check_error < pow(10,-7)) continue;
+            double sum_mean, sum_sigma, sum_skew, sum_kurt, sum_Sigma_err, sum_skew_err, sum_kurt_err, event_cen;
             
             
+            for( int i=0; i<= 700; i++){// i corresponds to refmult
+                
+                sum_mean   += mean_n[i]*nevent[i];
+                sum_sigma  += sigma_n[i]*nevent[i];
+                sum_skew   += skew_n[i]*nevent[i];
+                sum_kurt   += kurt_n[i]*nevent[i];
+                
+                //for error calculation
+                sum_Sigma_err  += pow(nevent[i],2)*pow(Err_sigma[i],2);
+                sum_skew_err  += pow(nevent[i],2)*pow(Err_skew[i],2);
+                sum_kurt_err  += pow(nevent[i],2)*pow(Err_kurt[i],2);
+                
+                event_cen += nevent[i]; //total weight
+                
+            }//end of i loop
             
-            ///// will be need for error calculation
-            int evt = nevent[ir];
-            if (evt == 0) continue;
+            if(event_cen == 0) continue;
             
-            mu1[ir] = netq1[ir]/evt;
-            mu2[ir] = netq2[ir]/evt - pow(netq1[ir]/evt,2);
-            mu3[ir] = netq3[ir]/evt - 3*(netq1[ir]/evt)*(netq2[ir]/evt)+ 2*pow(netq1[ir]/evt,3);
-            mu4[ir] = netq4[ir]/evt - 4*(netq1[ir]/evt)*(netq3[ir]/evt) + 6*pow(netq1[ir]/evt,2)*netq2[ir]/evt - 3*pow(netq1[ir]/evt,4);
-            
-            mu5[ir] = netq5[ir]/evt - 10*(netq2[ir]/evt)*pow(netq1[ir]/evt,3) + 10*(netq3[ir]/evt)*pow(netq1[ir]/evt,2) - 5*(netq4[ir]/evt)*(netq1[ir]/evt)+ 4*pow(netq1[ir]/evt,5);
-            
-            mu6[ir] = netq6[ir]/evt + 15*(netq2[ir]/evt)*pow(netq1[ir]/evt,4) - 20*(netq3[ir]/evt)*pow(netq1[ir]/evt,3) +15*(netq4[ir]/evt)*pow(netq1[ir]/evt,2)
-            - 6*(netq5[ir]/evt)*(netq1[ir]/evt) - 5*pow(netq1[ir]/evt,6);
-            
-            mu7[ir] = netq7[ir]/evt - 21*(netq2[ir]/evt)*pow(netq1[ir]/evt,5) + 35*(netq3[ir]/evt)*pow(netq1[ir]/evt,4) - 35*(netq4[ir]/evt)*pow(netq1[ir]/evt,3)
-            + 21*(netq5[ir]/evt)*pow(netq1[ir]/evt,2) - 7*(netq6[ir]/evt)*(netq1[ir]/evt) + 6*pow(netq1[ir]/evt,7);
-            
-            mu8[ir] = netq8[ir]/evt + 28*(netq2[ir]/evt)*pow(netq1[ir]/evt,6) - 56*(netq3[ir]/evt)*pow(netq1[ir]/evt,5) + 70*(netq4[ir]/evt)*pow(netq1[ir]/evt,4)
-            - 56*(netq5[ir]/evt)*pow(netq1[ir]/evt,3)+28*(netq6[ir]/evt)*pow(netq1[ir]/evt,2) - 8*(netq7[ir]/evt)*(netq1[ir]/evt) - 7*pow(netq1[ir]/evt,8);
-            
-            
-            double den = Variance(netq1[ir],netq2[ir],evt);
-            if(den<pow(10,-7)) continue; //go back if sigma is model_zero
-            
-            
-            //::::::::Delta Theorem for error:::::::::
-            m3[ir]    =  (mu3[ir])/pow(den,3);
-            m4[ir]    =  (mu4[ir])/pow(den,4);
-            m5[ir]    =  (mu5[ir])/pow(den,5);
-            m6[ir]    =  (mu6[ir])/pow(den,6);
-            m7[ir]    =  (mu7[ir])/pow(den,7);
-            m8[ir]    =  (mu8[ir])/pow(den,8);
-            
-            double check_sigma = ((m4[ir] - 1)*den*den)/(4*evt);
-            
-            double check_skew = (9 - 6*m4[ir] + m3[ir]*m3[ir]*(35 + 9*m4[ir])/4 - 3*m3[ir]*m5[ir] + m6[ir])/(evt);
-            
-            double check_kurt = (-m4[ir]*m4[ir] + 4*m4[ir]*m4[ir]*m4[ir] + 16*m3[ir]*m3[ir]*( 1 + m4[ir] ) - 8*m3[ir]*m5[ir] - 4*m4[ir]*m6[ir] + m8[ir])/(evt);
+            //:::::::::: final values of moments :::::::::
+            double Mean_n    = sum_mean/event_cen;
+            double St_dev_n  = sum_sigma/event_cen;
+            double Skewness_n = sum_skew/event_cen;
+            double Kurtosis_n = sum_kurt/event_cen;
             
             
-            if(check_sigma < 0 || check_skew < 0 || check_kurt < 0) {cout << "DANGER in refmult =  " << ir << endl; continue;}
+            //:::::::::: final  error on moments :::::::::
             
-            Err_mean[ir] = den/sqrt(evt);
-            Err_sigma[ir] = sqrt(check_sigma);
-            Err_skew[ir]  = sqrt(check_skew);
-            Err_kurt[ir]  = sqrt(check_kurt);
-            
-            
-            ////calculate moments for each refmult bin
-            
-            mean_n[ir] = Mean(netq1[ir],evt);
-            sigma_n[ir] = Variance(netq1[ir],netq2[ir],evt);
-            skew_n[ir]  = Skewness(netq1[ir],netq2[ir],netq3[ir],evt);
-            kurt_n[ir]  = Kurtosis(netq1[ir],netq2[ir],netq3[ir],netq4[ir],evt);
+            double err_mean  = St_dev_n/sqrt(event_cen);
+            double err_sigma = TMath::Sqrt(sum_Sigma_err/pow(event_cen,2)) ;
+            double err_skew  = TMath::Sqrt(sum_skew_err/pow(event_cen,2)) ;
+            double err_kurto = TMath::Sqrt(sum_kurt_err/pow(event_cen,2)) ;
             
             
-        }//refmult bin
-        
-        
-        cout << "Puhh" << endl;
-        
-        ////////calculate cumulant for each centrality bin and phi bin
-        
-        double sum_mean, sum_sigma, sum_skew, sum_kurt, sum_Sigma_err, sum_skew_err, sum_kurt_err, event_cen;
-        
-        
-        for( int i=ref_beg; i<= 650; i++){// i corresponds to refmult
+            //write in a ascii file
             
-            sum_mean   += mean_n[i]*nevent[i];
-            sum_sigma  += sigma_n[i]*nevent[i];
-            sum_skew   += skew_n[i]*nevent[i];
-            sum_kurt   += kurt_n[i]*nevent[i];
             
-            //for error calculation
-            sum_Sigma_err  += pow(nevent[i],2)*pow(Err_sigma[i],2);
-            sum_skew_err  += pow(nevent[i],2)*pow(Err_skew[i],2);
-            sum_kurt_err  += pow(nevent[i],2)*pow(Err_kurt[i],2);
+            if(con==1)datafilep<<con<<"\t"<<j<<"\t"<<Mean_n<<"\t"<<err_mean<<"\t"<<St_dev_n<<"\t"<<err_sigma<<"\t"<<Skewness_n<<"\t"<<err_skew<<"\t"<<Kurtosis_n<<"\t"<<err_kurto<<endl;
             
-            event_cen += nevent[i]; //total weight
+            if(con==2)datafileq<<con<<"\t"<<j<<"\t"<<Mean_n<<"\t"<<err_mean<<"\t"<<St_dev_n<<"\t"<<err_sigma<<"\t"<<Skewness_n<<"\t"<<err_skew<<"\t"<<Kurtosis_n<<"\t"<<err_kurto<<endl;
             
-        }//end of i loop
-        
-        if(event_cen == 0) continue;
-        
-        //:::::::::: final values of moments :::::::::
-        double Mean_n    = sum_mean/event_cen;
-        double St_dev_n  = sum_sigma/event_cen;
-        double Skewness_n = sum_skew/event_cen;
-        double Kurtosis_n = sum_kurt/event_cen;
-        
-        
-        //:::::::::: final  error on moments :::::::::
-        
-        double err_mean  = St_dev_n/sqrt(event_cen);
-        double err_sigma = TMath::Sqrt(sum_Sigma_err/pow(event_cen,2)) ;
-        double err_skew  = TMath::Sqrt(sum_skew_err/pow(event_cen,2)) ;
-        double err_kurto = TMath::Sqrt(sum_kurt_err/pow(event_cen,2)) ;
-        
-        
-        //write in a ascii file
-        
-        datafilep<<con<<"\t"<<Mean_n<<"\t"<<err_mean<<"\t"<<St_dev_n<<"\t"<<err_sigma<<"\t"<<Skewness_n<<"\t"<<err_skew<<"\t"<<Kurtosis_n<<"\t"<<err_kurto<<endl;
-        
-        Mean_n = 0; St_dev_n = 0; Skewness_n = 0; Kurtosis_n = 0;
-        err_mean = 0; err_sigma = 0; err_skew = 0; err_kurto = 0;
+            Mean_n = 0; St_dev_n = 0; Skewness_n = 0; Kurtosis_n = 0;
+            err_mean = 0; err_sigma = 0; err_skew = 0; err_kurto = 0;
+        }
     }
-    
 } // end of main function
 
 
