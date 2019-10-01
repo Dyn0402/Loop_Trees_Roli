@@ -149,8 +149,8 @@ void moments(TString inputfilename_profile, int energy)
     cout << "Starting actual work !! " << endl;
     ///// ===== Getting profile from input file =====
     
-    for(int con = 1; con < 2; con++){
-        for(int j = 1; j <= 15; j++){
+    for(int con = 1; con < 3; con++){
+        for(int j = 1; j <= 9; j++){
             for( int i=1; i< binSize; i++){
                 
                 sprintf(name,"p1_%d_%d",con,j);
