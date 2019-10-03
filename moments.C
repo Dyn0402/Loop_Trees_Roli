@@ -265,7 +265,7 @@ void moments(TString inputfilename_profile, int energy)
             
             ////////calculate cumulant for each centrality bin and phi bin
             
-            double sum_mean, sum_sigma, sum_skew, sum_kurt, sum_Sigma_err, sum_skew_err, sum_kurt_err, event_cen;
+            double sum_mean= 0, sum_sigma = 0, sum_skew = 0, sum_kurt = 0, sum_Sigma_err = 0, sum_skew_err = 0, sum_kurt_err = 0, event_cen = 0;
             
             
             for( int i=0; i<= 700; i++){// i corresponds to refmult
