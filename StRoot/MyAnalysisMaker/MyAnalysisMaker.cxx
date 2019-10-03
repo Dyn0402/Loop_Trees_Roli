@@ -196,10 +196,10 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
             
             hnParticle[1][cent]->Fill(nParticle);
             
-            ratio = (double) num_particle_1/nParticle; FillHistograms(ratio, refMult2, 1, cent); hratio[1][cent]->Fill(ratio);
+            ratio = (double) num_particle_1/nParticle; FillHistograms(ratio, 1, 1, cent); hratio[1][cent]->Fill(ratio);
             if(ratio == 1) hnParticle1[1][cent]->Fill(nParticle);
             
-            ratio = (double) num_particle_2/nParticle; FillHistograms(ratio, refMult2, 1, cent); hratio[1][cent]->Fill(ratio);
+            ratio = (double) num_particle_2/nParticle; FillHistograms(ratio, 1, 1, cent); hratio[1][cent]->Fill(ratio);
             if(ratio == 1) hnParticle1[1][cent]->Fill(nParticle);
 	    /*            
             ratio = (double) num_particle_3/nParticle; FillHistograms(ratio, refMult2, 1, cent); hratio[1][cent]->Fill(ratio);
