@@ -100,57 +100,53 @@ void moments(TString inputfilename_profile, int energy)
     double skew_n[binSize];
     double kurt_n[binSize];
     
-    
-    for(int l=0; l<binSize; l++){
-        
-        nevent[l]=0.;
-        
-        netq1[l]=0.;
-        netq2[l]=0.;
-        netq3[l]=0.;
-        netq4[l]=0.;
-        netq5[l]=0.;
-        netq6[l]=0.;
-        netq7[l]=0.;
-        netq8[l]=0.;
-        
-        mu1[l]=0.;
-        mu2[l]=0.;
-        mu3[l]=0.;
-        mu4[l]=0.;
-        mu5[l]=0.;
-        mu6[l]=0.;
-        mu7[l]=0.;
-        mu8[l]=0.;
-        
-        m3[l]=0.;
-        m4[l]=0.;
-        m5[l]=0.;
-        m6[l]=0.;
-        m7[l]=0.;
-        m8[l]=0.;
-        
-        Err_mean[l]=0.;
-        Err_sigma[l]=0.;
-        Err_skew[l]=0.;
-        Err_kurt[l]=0.;
-        
-        mean_n[l]=0.;
-        sigma_n[l] = 0.;
-        skew_n[l]  = 0.;
-        kurt_n[l]  = 0.;
-        
-    }
-    
-    
-    
     char name[60];
     
     cout << "Starting actual work !! " << endl;
     ///// ===== Getting profile from input file =====
     
     for(int con = 1; con < 3; con++){
-        for(int j = 9; j <= 9; j++){
+        for(int j = 1; j <= 9; j++){
+        	for(int l=0; l<binSize; l++){
+				nevent[l]=0.;
+
+				netq1[l]=0.;
+				netq2[l]=0.;
+				netq3[l]=0.;
+				netq4[l]=0.;
+				netq5[l]=0.;
+				netq6[l]=0.;
+				netq7[l]=0.;
+				netq8[l]=0.;
+
+				mu1[l]=0.;
+				mu2[l]=0.;
+				mu3[l]=0.;
+				mu4[l]=0.;
+				mu5[l]=0.;
+				mu6[l]=0.;
+				mu7[l]=0.;
+				mu8[l]=0.;
+
+				m3[l]=0.;
+				m4[l]=0.;
+				m5[l]=0.;
+				m6[l]=0.;
+				m7[l]=0.;
+				m8[l]=0.;
+
+				Err_mean[l]=0.;
+				Err_sigma[l]=0.;
+				Err_skew[l]=0.;
+				Err_kurt[l]=0.;
+
+				mean_n[l]=0.;
+				sigma_n[l] = 0.;
+				skew_n[l]  = 0.;
+				kurt_n[l]  = 0.;
+
+			}
+
             for( int i=1; i< binSize; i++){
                 
                 sprintf(name,"p1_%d_%d",con,j);
