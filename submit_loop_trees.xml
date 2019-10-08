@@ -17,7 +17,7 @@
 		</Package>
 	</SandBox>
 
-	<input URL="file:/gpfs01/star/pwg/dneff/scratch/trees_roli/output/&energy;GeV/*.root" nFiles="all" />
+	<input URL="file:/gpfs01/star/pwg/dneff/scratch/roli_trees/output/&energy;GeV/*.root" nFiles="all" />
 	<stderr URL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/err_&energy;GeV$JOBID.err"/>
 	<stdout URL="file:/gpfs01/star/pwg/dneff/scratch/loop_out/log/&energy;GeV/log_&energy;GeV$JOBID.out" />
 
@@ -26,8 +26,8 @@
  
 	<Generator>
 		<Location>/gpfs01/star/pwg/dneff/scratch/loop_out/log/</Location>
-		<ScriptLocation>/gpfs01/star/pwg/dneff/scratch/loop_out/script/7GeV/</ScriptLocation>
-		<ListLocation>/gpfs01/star/pwg/dneff/scratch/loop_out/list/7GeV/</ListLocation>
+		<ScriptLocation>/gpfs01/star/pwg/dneff/scratch/loop_out/script/27GeV/</ScriptLocation>
+		<ListLocation>/gpfs01/star/pwg/dneff/scratch/loop_out/list/27GeV/</ListLocation>
 	</Generator>
   
 </job>
