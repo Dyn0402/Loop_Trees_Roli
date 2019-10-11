@@ -144,7 +144,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         refMult = s->Nprim;
         htr->Fill(refMult,tofmult);
         // Dylan Edit 10/9/19 Start for 27
-        if(tofmult / refMult > (double)(1878-207)/(400+18) || tofmult / refMult < (double)(1211+39)/(460-6)) { continue; }
+        if((double)tofmult / refMult > (double)(1878-207)/(400+18) || (double)tofmult / refMult < (double)(1211+39)/(460-6)) { continue; }
 		// Dylan Edit 10/9/19 Start
         
         Psi = s->psi;
