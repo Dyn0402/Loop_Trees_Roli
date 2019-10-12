@@ -113,7 +113,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         nbytes += chain->GetEntry(ievt);
         
         EventCount->Fill(0.2); //record # of events
-        event_cut_hist->Fill(0);
+        event_cut_hist.Fill(0);
         
 	if((ievt+1)%1000000==1) cout<<"Processing entry == "<< ievt+1 <<" == out of "<<nentries<<" last event centrality " << cent <<".\n" ;
         
@@ -128,14 +128,14 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         }
         if(bad_run_bool) { continue; }
         EventCount->Fill(1.5);
-        event_cut_hist->Fill(1);
+        event_cut_hist.Fill(1);
         // Dylan Edit 10/9/19 End
         
         nProton = s->Proton_;
         
         if (nProton < 2) continue;
         EventCount -> Fill(2.5);
-        event_cut_hist->Fill(2);
+        event_cut_hist.Fill(2);
         
         tofmult = s->btof;
         refMult = s->Nprim;
@@ -152,7 +152,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
 		}
         // Dylan Edit 10/9/19 End
         EventCount->Fill(3.5);
-        event_cut_hist->Fill(3);
+        event_cut_hist.Fill(3);
 
         refMult2 = s->ref2;
 		cent = getCentrality(refMult2,energy);
@@ -170,7 +170,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         for(int trk = 0; trk < nProton; trk++){
             
             check = 0;
-            track_cut_hist->Fill(0);
+            track_cut_hist.Fill(0);
             
             pt = s->Proton_pt[trk];
             p = s->Proton_p[trk];
@@ -181,17 +181,17 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
             charge = s->Proton_charge[trk];
             
             if(p < 0.15) continue;
-            track_cut_hist->Fill(1);
+            track_cut_hist.Fill(1);
             if(pt < 0.4 || pt > 2.0) continue;
-            track_cut_hist->Fill(2);
+            track_cut_hist.Fill(2);
             if(charge != 1) continue;
-            track_cut_hist->Fill(3);
+            track_cut_hist.Fill(3);
             if(fabs(eta) > 0.5) continue;
-            track_cut_hist->Fill(4);
+            track_cut_hist.Fill(4);
             if(fabs(nsigma) > 2.0) continue;
-            track_cut_hist->Fill(5);
+            track_cut_hist.Fill(5);
             if(dca < 0 || dca > 2.0) continue;
-            track_cut_hist->Fill(6);
+            track_cut_hist.Fill(6);
             
             if (pt < 0.8){
                 check = 1;
@@ -204,7 +204,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
             }
             
             if(check == 1){
-            	track_cut_hist->Fill(7);
+            	track_cut_hist.Fill(7);
                 
                 CurrentEvent_ProtonPhi[CurrentEvent_nProton] = phi;
                 CurrentEvent_nProton++;
@@ -226,7 +226,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         if(CurrentEvent_nProton < 2) continue;
         if(nParticle < 2) continue;
         
-        event_cut_hist->Fill(4);
+        event_cut_hist.Fill(4);
 
         cent9_events.Fill(cent);
 
