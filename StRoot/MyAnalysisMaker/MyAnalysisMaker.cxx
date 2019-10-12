@@ -128,21 +128,15 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         if(bad_run_bool) { continue; }
         EventCount->Fill(1.5);
         // Dylan Edit 10/9/19 End
-
-        refMult2 = s->ref2;
-        cent = getCentrality(refMult2,energy);
-        if(cent < 0 || cent > 9) continue;
-        CurrentEvent_centrality = cent;
-        EventCount -> Fill(4.2);
         
         nProton = s->Proton_;
         
-        if (nProton == 0) continue;
-        EventCount -> Fill(5.2);
+        if (nProton < 2) continue;
+        EventCount -> Fill(2.5);
         
         tofmult = s->btof;
         refMult = s->Nprim;
-        htr->Fill(refMult,tofmult);
+        htr->Fill(tofmult, refMult);
         // Dylan Edit 10/9/19 Start
         if(energy == 27) {
         	if((double)tofmult / refMult > (double)(1878-207)/(400+18) || (double)tofmult / refMult < (double)(1211+39)/(460-6)) { continue; }
@@ -154,7 +148,13 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
 			if((double)tofmult / refMult > (double)(1596-195)/(364+11) || (double)tofmult / refMult < (double)(1049+35)/(426-5)) { continue; }
 		}
         // Dylan Edit 10/9/19 End
-        EventCount->Fill(6.5);
+        EventCount->Fill(3.5);
+
+        refMult2 = s->ref2;
+		cent = getCentrality(refMult2,energy);
+		if(cent < 0 || cent > 9) continue;
+		CurrentEvent_centrality = cent;
+		EventCount -> Fill(4.5);
         
         Psi = s->psi;
         if(Psi < 0) Psi = Psi + Pi;
@@ -402,7 +402,7 @@ Int_t MyAnalysisMaker::getPhiBin(double phi){
 void MyAnalysisMaker::declareHistograms(){
     
     EventCount    = new TH1F("EventCount","EventCount",10,0,10);
-    htr           = new TH2F("htr","tofmult vs refmult",1000,0,1000,10000,0,10000);
+    htr           = new TH2F("htr","tofmult vs refmult",3001,-0.5,3000.5,601,-0.5,600.5);
     
 	event_cut_hist = TH1I("event_cut", "Event Cuts", 4, -0.5, 3.5);
 	track_cut_hist = TH1I("track_cut", "Track Cuts", 8, -0.5, 7.5);
