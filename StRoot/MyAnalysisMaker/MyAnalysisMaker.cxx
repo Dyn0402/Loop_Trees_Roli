@@ -110,7 +110,6 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
     
     int nbytes=0;
     for(int ievt = 0; ievt < nentries; ievt++){
-        
         nbytes += chain->GetEntry(ievt);
         
         EventCount->Fill(0.2); //record # of events
@@ -127,6 +126,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         	if(current_run == bad_runs[b_run]) { bad_run_bool = true; }
         }
         if(bad_run_bool) { continue; }
+        EventCount->Fill(1.5);
         // Dylan Edit 10/9/19 End
 
         refMult2 = s->ref2;
@@ -154,6 +154,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
 			if((double)tofmult / refMult > (double)(1596-195)/(364+11) || (double)tofmult / refMult < (double)(1049+35)/(426-5)) { continue; }
 		}
         // Dylan Edit 10/9/19 End
+        EventCount->Fill(6.5);
         
         Psi = s->psi;
         if(Psi < 0) Psi = Psi + Pi;
@@ -213,6 +214,8 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
         if(CurrentEvent_nProton < 2) continue;
         if(nParticle < 2) continue;
         
+        cent9_events.Fill(cent);
+
         if(cent > 0 && cent < 10 &&  nParticle > 1){
             
             hnParticle[1][cent]->Fill(nParticle);
@@ -401,6 +404,11 @@ void MyAnalysisMaker::declareHistograms(){
     EventCount    = new TH1F("EventCount","EventCount",10,0,10);
     htr           = new TH2F("htr","tofmult vs refmult",1000,0,1000,10000,0,10000);
     
+	event_cut_hist = TH1I(("event_cut"+to_string(energy)).data(), "Event Cuts", 4, -0.5, 3.5);
+	track_cut_hist = TH1I(("track_cut"+to_string(energy)).data(), "Track Cuts", 8, -0.5, 7.5);
+	cent16_events = TH1I(("cent16_events"+to_string(energy)).data(), "Cent16 Events", 18, -1.5, 16.5);
+	cent9_events = TH1I(("cent9_events"+to_string(energy)).data(), "Cent9 Events", 11, -1.5, 9.5);
+
     const Double_t binSize=700.0, minBin=-0.5, maxBin=699.5;
     
     for(int i = 1; i < 3; i++){
@@ -458,6 +466,11 @@ void MyAnalysisMaker::writeHistograms(){
     EventCount->Write();
     htr->Write();
     
+    event_cut_hist.Write();
+	track_cut_hist.Write();
+	cent16_events.Write();
+	cent9_events.Write();
+
     for(int i = 1; i < 3; i++){
         
         for(int j = 1; j < 10; j++){

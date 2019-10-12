@@ -107,7 +107,13 @@ private:
     //------histograms pointer------------
     TH1F *EventCount;
     TH2F *htr;
-    
+
+	TH1I event_cut_hist;
+	TH1I track_cut_hist;
+	TH1I cent16_events;
+	TH1I cent9_events;
+
+
     TH1F *hnParticle[5][16];
     TH1F *hratio[5][16];
     TH1F *hnParticle1[5][16];
