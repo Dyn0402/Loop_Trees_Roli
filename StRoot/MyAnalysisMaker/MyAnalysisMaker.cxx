@@ -418,7 +418,7 @@ void MyAnalysisMaker::declareHistograms(){
     EventCount    = new TH1F("EventCount","EventCount",10,0,10);
     htr           = new TH2F("htr","tofmult vs refmult",3001,-0.5,3000.5,601,-0.5,600.5);
     
-	event_cut_hist = TH1I("event_cut", "Event Cuts", 4, -0.5, 3.5);
+	event_cut_hist = TH1I("event_cut", "Event Cuts", 5, -0.5, 4.5);
 	track_cut_hist = TH1I("track_cut", "Track Cuts", 8, -0.5, 7.5);
 	cent16_events = TH1I("cent16_events", "Cent16 Events", 18, -1.5, 16.5);
 	cent9_events = TH1I("cent9_events", "Cent9 Events", 11, -1.5, 9.5);
