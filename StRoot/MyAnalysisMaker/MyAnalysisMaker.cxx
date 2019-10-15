@@ -175,6 +175,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
             pt = s->Proton_pt[trk];
             p = s->Proton_p[trk];
             phi = s->Proton_phi[trk];
+            eta = s->Proton_eta[trk]; // Added by Dylan 10/15/19
             beta = s->Proton_beta[trk];
             dca = s->Proton_dca[trk];
             nsigma = s->Proton_nsigma[trk];
