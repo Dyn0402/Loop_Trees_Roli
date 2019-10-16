@@ -156,7 +156,7 @@ Double_t MyAnalysisMaker::doLoop(char *inputfile, char* outname, int energy){
 
         refMult2 = s->ref2;
 		cent = getCentrality(refMult2,energy);
-		if(cent < 0 || cent > 9) continue;
+//		if(cent < 0 || cent > 9) continue;
 		CurrentEvent_centrality = cent;
 		EventCount -> Fill(4.5);
         
